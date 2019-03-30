@@ -44,7 +44,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
    create_project project_1 myproj -part xczu7ev-ffvc1156-2-e
-   set_property BOARD_PART xilinx.com:zcu104:part0:1.1 [current_project]
+   set_property BOARD_PART xilinx.com:zcu104:part0:1.0 [current_project]
 }
 
 
@@ -763,6 +763,7 @@ proc create_root_design { parentCell } {
   # Restore current instance
   current_bd_instance $oldCurInst
 
+  validate_bd_design
   save_bd_design
 }
 # End of create_root_design()
@@ -772,11 +773,6 @@ proc create_root_design { parentCell } {
 # MAIN FLOW
 ##################################################################
 
-
-common::send_msg_id "BD_TCL-2000" "CRITICAL WARNING" "This Tcl script was generated from a block design that is out-of-date/locked. It is possible that design <$design_name> may result in errors during construction."
-
 create_root_design ""
 
-
-common::send_msg_id "BD_TCL-1000" "WARNING" "This Tcl script was generated from a block design that has not been validated. It is possible that design <$design_name> may result in errors during validation."
 
